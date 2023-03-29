@@ -44,6 +44,9 @@ console.log("Will Read File");
 ///////////////////////////////////////////////////////////
 ///////////////////SERVER////////////////////////////////
 
+const apiData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const productData = JSON.parse(apiData);
+
 const server = http.createServer((req, res) => {
   const pathName = req.url;
   //   console.log(req);
@@ -51,6 +54,11 @@ const server = http.createServer((req, res) => {
     res.end("This is the overview");
   } else if (pathName === "/product") {
     res.end("this is product");
+  } else if (pathName === "/api") {
+    res.writeHead(200, {
+      "Content-type": "application/json",
+    });
+    res.end(apiData);
   } else {
     res.writeHead(404, {
       "Content-type": "text/html",
