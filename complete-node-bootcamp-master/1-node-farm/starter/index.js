@@ -2,6 +2,8 @@ const fs = require("fs");
 const http = require("http");
 const url = require("url");
 const replaceTemplate = require("./modules/replaceTemplate");
+const slugify = require("slugify");
+
 ///////////////////////////////////////////////////////////
 ///////////////////FILES////////////////////////////////
 /*
@@ -44,6 +46,7 @@ console.log("Will Read File");
 ///////////////////////////////////////////////////////////
 ///////////////////SERVER////////////////////////////////
 
+// Templates
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template-overview.html`,
   "utf-8"
@@ -56,9 +59,16 @@ const tempCard = fs.readFileSync(
   `${__dirname}/templates/template-card.html`,
   "utf-8"
 );
+
+// Api Data Loaded
 const apiData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(apiData);
 
+// Slugs Created
+const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
+console.log(slugs);
+
+// Server Created
 const server = http.createServer((req, res) => {
   const { query: newQuery, pathname } = url.parse(req.url, true);
   const query = JSON.parse(JSON.stringify(newQuery));
