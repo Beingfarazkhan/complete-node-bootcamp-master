@@ -21,9 +21,31 @@ const writeFilePro = (file, data) => {
   });
 };
 
+// Async Await Method :
+
+const getDogPic = async () => {
+  try {
+    const data = await readFilePro(`${__dirname}/dog.txt`);
+    console.log(`Breed : ${data}`);
+
+    const res = await superagent.get(
+      `https://dog.ceo/api/breed/${data}/images/random`
+    );
+    console.log(res.body.message);
+    await writeFilePro("dog-image.txt", res.body.message);
+    console.log("Random Dog Image Saved to file");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+getDogPic();
+
+// Chaining promises :
+/*
 readFilePro(`${__dirname}/dog.txt`)
   .then((data) => {
-    console.log(`Breed : ${data}`);
+
     return superagent.get(`https://dog.ceo/api/breed/${data}/images/random`);
   })
   .then((res) => {
@@ -36,8 +58,9 @@ readFilePro(`${__dirname}/dog.txt`)
   .catch((err) => {
     console.log(err);
   });
+  */
 
-// Callback Hell
+// Callback Hell :
 /*
 fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
   console.log(`Breed : ${data}`);
@@ -54,7 +77,7 @@ fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
     });
 });
  
-
+// Then Method : 
 fs.readFile(`${__dirname}/dog.txt`, (err, data) => {
   console.log(`Breed : ${data}`);
 
