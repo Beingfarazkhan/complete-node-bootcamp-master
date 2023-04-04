@@ -36,10 +36,33 @@ const getDogPic = async () => {
     console.log("Random Dog Image Saved to file");
   } catch (err) {
     console.log(err);
+    throw err;
   }
+  return "2 : Ready Dog 🐶";
 };
 
-getDogPic();
+// Using async await :
+(async () => {
+  try {
+    console.log("1 : Starting to get Dog pics 🐶");
+    const x = await getDogPic();
+    console.log(x);
+    console.log("3 : Done getting Dog pics 🐶");
+  } catch (err) {
+    console.log(err);
+  }
+})();
+
+// Using promises :
+// console.log("1 : Starting to get Dog pics 🐶");
+// getDogPic()
+//   .then((x) => {
+//     console.log(x);
+//     console.log("3 : Done getting Dog pics 🐶");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 // Chaining promises :
 /*
