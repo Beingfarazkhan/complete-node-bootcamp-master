@@ -10,10 +10,14 @@ const app = express();
 //////////////////////////////////////////////////////////
 /////////  MIDDLEWARES  ///////////////////////////////////////////
 //////////////////////////////////////////////////////////
-
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(express.json());
+
+// Serving static files from folder
+app.use(express.static(`${__dirname}/public`));
 
 // Our own middleware
 app.use((req, res, next) => {
