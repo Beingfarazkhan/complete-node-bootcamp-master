@@ -6,6 +6,21 @@ const tours = JSON.parse(
   )
 );
 
+exports.checkId = (req, res, next, val) => {
+  console.log(`value of id is ${val}`);
+
+  if (+req.params.id > tours.length)
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid Id',
+    });
+  next();
+};
+
+//////////////////////////////////////////////////////////
+////////  ROUTE HANDLERS  ///////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
 exports.getAllTours = (req, res) => {
   console.log(req.requestTime);
   res.status(200).json({
@@ -77,12 +92,6 @@ exports.updateTour = (req, res) => {
 };
 
 exports.deleteTour = (req, res) => {
-  if (+req.params.id > tours.length)
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid Id',
-    });
-
   res.status(204).json({
     status: 'success',
     data: null,
